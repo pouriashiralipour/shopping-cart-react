@@ -1,18 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImSearch } from "react-icons/im";
 
 import Card from "../components/Card";
 import Loader from "../components/Loader";
 import { useProducts } from "../context/ProductContext";
 import styles from "./ProductPage.module.css";
+import { FaListUl } from "react-icons/fa";
 
 const ProductPage = () => {
   const products = useProducts();
 
+  const [displayed, setDisplayed] = useState([]);
   const [search, setSearch] = useState("");
 
+  useEffect(() => {
+    setDisplayed(products);
+  }, [products]);
+
   const searchHandler = () => {
-    console.log(search);
+    console.log("search");
+  };
+  const categoryHandler = (event) => {
+    const { tagName } = event.target;
+    const category = event.target.innerText.toLowerCase();
+    if (tagName !== "LI") return;
   };
   return (
     <>
@@ -32,12 +43,24 @@ const ProductPage = () => {
       </div>
       <div className={styles.container}>
         <div className={styles.products}>
-          {!products.length && <Loader />}
-          {products.map((product) => (
+          {!displayed.length && <Loader />}
+          {displayed.map((product) => (
             <Card key={product.id} data={product} />
           ))}
         </div>
-        <div>sidebar</div>
+        <div>
+          <div>
+            <FaListUl />
+            <p>Categories</p>
+          </div>
+          <ul onClick={categoryHandler}>
+            <li>All</li>
+            <li>Electronics</li>
+            <li>Jewelery</li>
+            <li>Men's Clothing</li>
+            <li>Women's Clothing</li>
+          </ul>
+        </div>
       </div>
     </>
   );
