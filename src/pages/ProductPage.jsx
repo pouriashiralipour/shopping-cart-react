@@ -2,9 +2,17 @@ import { useProducts } from "../context/ProductContext";
 
 const ProductPage = () => {
   const products = useProducts();
-  console.log(products);
 
-  return <div>ProductPage</div>;
+  return (
+    <div>
+      <div>
+        {products.map((product) => (
+          <p key={product.id}>{product.title}</p>
+        ))}
+      </div>
+      <div>sidebar</div>
+    </div>
+  );
 };
 
 export default ProductPage;
