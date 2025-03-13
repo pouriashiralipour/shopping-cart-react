@@ -2,10 +2,20 @@ import { TbListDetails, TbShoppingBagCheck } from "react-icons/tb";
 import { Link } from "react-router";
 
 import styles from "./Card.module.css";
+import { useCart } from "../context/CartContext";
+
 import { shortText } from "../helper/helper";
 
 const Card = ({ data }) => {
-  const { id, title, price, category, image } = data;
+  const { id, title, price, image } = data;
+
+  const [state, dispatch] = useCart();
+  console.log(state);
+
+  const addToCartHandler = () => {
+    dispatch({ type: "ADD_ITEM", payload: data });
+  };
+
   return (
     <div className={styles.card}>
       <img src={image} alt={shortText(title)} />
@@ -16,7 +26,7 @@ const Card = ({ data }) => {
           <TbListDetails />
         </Link>
         <div>
-          <button>
+          <button onClick={addToCartHandler}>
             <TbShoppingBagCheck />
           </button>
         </div>
