@@ -50,11 +50,11 @@
   align-items: center;
 }
 
-/* .actions div span {
+.actions div span {
   width: 20px;
   text-align: center;
   margin: 0 10px;
-} */
+}
 
 .actions div button {
   background-color: #fe5d42;
