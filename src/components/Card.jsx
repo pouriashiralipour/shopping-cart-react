@@ -1,19 +1,26 @@
-import { TbListDetails, TbShoppingBagCheck } from "react-icons/tb";
+import {
+  TbAddressBook,
+  TbListDetails,
+  TbMinus,
+  TbShoppingBagCheck,
+  TbTrash,
+} from "react-icons/tb";
 import { Link } from "react-router";
 
 import styles from "./Card.module.css";
 import { useCart } from "../context/CartContext";
 
 import { shortText } from "../helper/helper";
+import { MdDeleteOutline } from "react-icons/md";
 
 const Card = ({ data }) => {
   const { id, title, price, image } = data;
 
   const [state, dispatch] = useCart();
-  console.log(state);
+  //   console.log(state);
 
-  const addToCartHandler = () => {
-    dispatch({ type: "ADD_ITEM", payload: data });
+  const clickHandler = (type) => {
+    dispatch({ type, payload: data });
   };
 
   return (
@@ -26,9 +33,14 @@ const Card = ({ data }) => {
           <TbListDetails />
         </Link>
         <div>
-          <button onClick={addToCartHandler}>
+          <button onClick={() => clickHandler("ADD")}>
             <TbShoppingBagCheck />
           </button>
+          <button onClick={() => clickHandler("REMOVE")}>
+            <MdDeleteOutline />
+          </button>
+          <button onClick={() => clickHandler("INCREASE")}>+</button>
+          <button onClick={() => clickHandler("DECREASE")}>-</button>
         </div>
       </div>
     </div>

@@ -38,7 +38,6 @@ const getInitialQuery = (searchParams) => {
   if (search) query.search = search;
   return query;
 };
-
 const sumProducts = (products) => {
   const itemCounter = products.reduce(
     (counter, product) => counter + product.quantity,
@@ -47,12 +46,9 @@ const sumProducts = (products) => {
   const total = products
     .reduce((total, product) => total + product.price * product.quantity, 0)
     .toFixed(2);
-  return {
-    itemCounter,
-    total,
-  };
-};
 
+  return { itemCounter, total };
+};
 export {
   sumProducts,
   shortText,

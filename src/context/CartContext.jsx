@@ -3,27 +3,52 @@ import { sumProducts } from "../helper/helper";
 
 const initialState = {
   selectedItems: [],
-  iteCounter: 0,
+  itemCounter: 0,
   total: 0,
   checkout: false,
 };
 
 const reducer = (state, action) => {
-  console.log(action);
   switch (action.type) {
-    case "ADD_ITEM":
+    case "ADD":
       if (!state.selectedItems.find((item) => item.id === action.payload.id)) {
         state.selectedItems.push({ ...action.payload, quantity: 1 });
       }
       return {
         ...state,
-        selectedItems: [...state.selectedItems],
-        ...sumProducts(state.selectedItems),
+        ...sumProducts([...state.selectedItems]),
         checkout: false,
+      };
+    case "REMOVE":
+      const newSelectedItems = state.selectedItems.filter(
+        (item) => item.id !== action.payload.id,
+      );
+      return {
+        ...state,
+        selectedItems: [...newSelectedItems],
+        ...sumProducts(newSelectedItems),
+      };
+    case "INCREASE":
+      const increaseIndex = state.selectedItems.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      state.selectedItems[increaseIndex].quantity += 1;
+      return {
+        ...state,
+        ...sumProducts(state.selectedItems),
+      };
+    case "DECREASE":
+      const decreaseIndex = state.selectedItems.findIndex(
+        (item) => item.id === action.payload.id,
+      );
+      state.selectedItems[decreaseIndex].quantity -= 1;
+      return {
+        ...state,
+        ...sumProducts(state.selectedItems),
       };
 
     default:
-      break;
+      throw new Error("Invalid Action!");
   }
 };
 
