@@ -15,7 +15,7 @@ const ProductsProvider = ({ children }) => {
       }
     };
     fetchProducts();
-  }, []);
+  }, [products]);
   return (
     <ProductContext.Provider value={products}>
       {children}
@@ -28,5 +28,11 @@ const useProducts = () => {
   return products;
 };
 
-export { useProducts };
+const useProductDetails = (id) => {
+  const products = useContext(ProductContext);
+  const result = products.find((product) => product.id === id);
+  return result;
+};
+
+export { useProducts, useProductDetails };
 export default ProductsProvider;
