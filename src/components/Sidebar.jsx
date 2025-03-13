@@ -1,5 +1,7 @@
 import { FaListUl } from "react-icons/fa";
+
 import { createQueryObject } from "../helper/helper";
+import styles from "./Sidebar.module.css";
 
 const Sidebar = ({ setQuery }) => {
   const categoryHandler = (event) => {
